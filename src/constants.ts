@@ -1,0 +1,1 @@
+export const BASE_IRL = process.env.NODE_ENV === 'production' ? 'none' : 'http://localhost:3000'
