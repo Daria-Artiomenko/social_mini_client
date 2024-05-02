@@ -4,10 +4,26 @@ import { Provider } from "react-redux"
 import App from "./App"
 import { store } from "./app/store"
 import {NextUIProvider} from "@nextui-org/react";
+import { createBrowserRouter } from "react-router-dom";
 import "./index.css"
+import path from "path"
+import { ThemeProvider } from "./components/themeProvider"
+
 
 
 const container = document.getElementById("root")
+
+const router = createBrowserRouter([
+  {
+    path: '/auth',
+    element: <h1>Auth</h1>
+  },
+  {
+    path: '/',
+    element: <h2>Layout</h2>
+  }
+
+])
 
 if (container) {
   const root = createRoot(container)
@@ -16,7 +32,9 @@ if (container) {
     <React.StrictMode>
       <Provider store={store}>
         <NextUIProvider>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </NextUIProvider>
       </Provider>
     </React.StrictMode>,
