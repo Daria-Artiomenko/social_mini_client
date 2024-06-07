@@ -1,14 +1,19 @@
-import React from "react"
-import { createRoot } from "react-dom/client"
-import { Provider } from "react-redux"
-import App from "./App"
-import { store } from "./app/store"
-import {NextUIProvider} from "@nextui-org/react";
-import { createBrowserRouter } from "react-router-dom";
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
+import { store } from "./app/store";
+import { NextUIProvider } from "@nextui-org/react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "./components/themeProvider";
 import "./index.css"
-import path from "path"
-import { ThemeProvider } from "./components/themeProvider"
-
+import { Auth } from "./pages/auth";
+import { Layout } from "./components/layout";
+import { Posts } from "./pages/posts";
+import { CurrentPost } from "./pages/current-post";
+import { UserProfile } from "./pages/user-profile";
+import { Followers } from "./pages/followers";
+import { Following } from "./pages/following";
 
 
 const container = document.getElementById("root")
@@ -16,11 +21,34 @@ const container = document.getElementById("root")
 const router = createBrowserRouter([
   {
     path: '/auth',
-    element: <h1>Auth</h1>
+    element: <Auth/>
   },
   {
     path: '/',
-    element: <h2>Layout</h2>
+    element: <Layout/>,
+    children: [
+      {
+        path: '',
+        element:<Posts/>
+      },
+      {
+        path: 'posts/:id',
+        element:<CurrentPost/>
+      },
+      {
+        path: 'users/:id',
+        element:<UserProfile/>
+      },
+      {
+        path: 'followers',
+        element:<Followers/>
+      },
+      {
+        path: 'following',
+        element:<Following/>
+      },
+      
+    ]
   }
 
 ])
@@ -33,7 +61,7 @@ if (container) {
       <Provider store={store}>
         <NextUIProvider>
           <ThemeProvider>
-            <App />
+            <RouterProvider router={router} />
           </ThemeProvider>
         </NextUIProvider>
       </Provider>
